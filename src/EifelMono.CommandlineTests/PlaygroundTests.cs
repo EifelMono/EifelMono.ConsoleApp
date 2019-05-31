@@ -1,5 +1,3 @@
-using System;
-using EifelMono.CommandlineTests.XunitTests;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,7 +9,7 @@ namespace EifelMono.CommandlineTests
         public PlayGroundTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
-        public void PlayGround1()
+        public async void PlayGround1Tests()
         {
         }
     }

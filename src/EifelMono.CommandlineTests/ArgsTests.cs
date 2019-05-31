@@ -1,8 +1,8 @@
-﻿using EifelMono.CommandlineTests.XunitTests;
+﻿using System;
+using System.Reflection;
+using EifelMono.Commandline;
 using Xunit;
 using Xunit.Abstractions;
-using EifelMono.Commandline;
-using System;
 
 namespace EifelMono.CommandlineTests
 {
@@ -12,21 +12,61 @@ namespace EifelMono.CommandlineTests
         public ArgTests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
-        public async void RootTests()
+        public async void RootCommand_WithtoutOption_Tests()
         {
-            var args = new string[] { };
-            var value = await args.CommandBuilder()
-                .RunAsync(() =>
-                {
-                    WriteLine("RootCommand");
-                });
+            Console.WriteLine("Hello World");
+            Console.Error.WriteLine("Hello Error");
+            try
+            {
+                var args = new string[] { };
+                var value = await args.ArgsBuilder()
+                    .OnCommand(() =>
+                    {
+                        WriteLine("RootCommand");
+                    })
+                    .RunAsync(TestTerminal);
+            }
+            finally
+            {
+                DumpTestTerminal();
+            }
+        }
+
+        [Theory]
+        [InlineData(0, true, "--string-a", "Hello", "--int-x", "4711")]
+        [InlineData(1, false, "--string-ax", "Hello", "--int-x", "4711")]
+        [InlineData(1, false, "--string-a", "Hello", "--int-x", "4711a")]
+        [InlineData(1, true)]
+        public async void RootCommand_WithOption_Tests(int shouldValue, bool shouldInCommand, params string[] args)
+        {
+            try
+            {
+                bool inCommand = false;
+                var value = await args.ArgsBuilder()
+                    .Option<string>("--string-a", default, "c# => stringa")
+                    .Option<int>("--int-x", default, "c# => intx")
+                    .OnCommand((stringa, intx) =>
+                    {
+                        WriteLine($"RootCommand stringa={stringa} intx={intx}");
+                        inCommand = true;
+                        Assert.Equal(args[1], stringa);
+                        Assert.Equal(args[3], intx.ToString());
+                    })
+                    .RunAsync(TestTerminal);
+                Assert.Equal(shouldInCommand, inCommand);
+                Assert.Equal(shouldValue, value);
+            }
+            finally
+            {
+                DumpTestTerminal();
+            }
         }
 
         [Fact]
         public async void RootCommand1Tests()
         {
             var args = new string[] { };
-            var value = await args.CommandBuilder()
+            var value = await args.ArgsBuilder()
                 .Command("command1")
                     .Alias("-c1")
                     .Option<int>("--int-a", default, "c# name => inta")
@@ -36,20 +76,21 @@ namespace EifelMono.CommandlineTests
                     {
                         WriteLine($"command1 {inta} {stringb} {doublec}");
                     })
-                .RunAsync(() =>
+                .OnCommand(() =>
                 {
-                    WriteLine("RootCommand");
-                });
+                    WriteLine("RootCommand {string.Join('|', args)}");
+                })
+                .RunAsync();
         }
 
         [Fact]
         public async void AllTests()
         {
             var args = new string[] { };
-            var value = await args.CommandBuilder()
+            var value = await args.ArgsBuilder()
                 .Command("command1")
                     .Command("command1.1")
-                        .Option<int>("- -int-a", default, "c# name => inta")
+                        .Option<int>("--int-a", default, "c# name => inta")
                         .OnCommand((inta) =>
                         {
                             WriteLine($"command1.1 {inta}");
@@ -75,10 +116,11 @@ namespace EifelMono.CommandlineTests
                     {
                         WriteLine($"command2 {dow}");
                     })
-                .RunAsync(() =>
+                .OnCommand(() =>
                 {
                     WriteLine("RootCommand");
-                });
+                })
+                .RunAsync(TestTerminal);
         }
     }
 }

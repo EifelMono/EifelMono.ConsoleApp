@@ -1,21 +1,34 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
-using Xunit.Abstractions;
+using System.IO;
+using System.Text;
 using EifelMono.Fluent.Extensions;
+using Newtonsoft.Json;
 using Xunit;
+using Xunit.Abstractions;
+using System.CommandLine.Rendering;
+using System.CommandLine;
 
-// use this in Main assemblies for internal things to the test
-[assembly: InternalsVisibleTo("EifelMono.Fluent.Test")]
-namespace EifelMono.CommandlineTests.XunitTests
+namespace EifelMono.CommandlineTests
 {
     public class XunitCore
     {
         protected readonly ITestOutputHelper Output;
 
-        public XunitCore(ITestOutputHelper output) => Output = output;
+        public IConsole TestTerminal = new TestTerminal();
+
+        public XunitCore(ITestOutputHelper output)
+        {
+            Output = output;
+        }
+
+        public void DumpTestTerminal()
+        {
+            WriteLine(TestTerminal.Out);
+        }
 
         public void WriteLine(string text = "") => Output.WriteLine(text);
+
+        public void WriteLine(Exception ex) => Output.WriteLine(ex.ToString());
 
         public void WriteLine(object @object) => Output.WriteLine(@object?.ToString() ?? "");
 
@@ -56,3 +69,4 @@ namespace EifelMono.CommandlineTests.XunitTests
            => Assert.True(true);
     }
 }
+
