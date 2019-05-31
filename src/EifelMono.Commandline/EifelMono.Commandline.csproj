@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EifelMono.Fluent" Version="0.0.15" />
+    <PackageReference Include="System.CommandLine.Experimental" Version="0.2.0-alpha.19272.1" />
+    <PackageReference Include="System.Interactive.Async" Version="4.0.0-preview.1.build.745" />
+  </ItemGroup>
+
+</Project>
