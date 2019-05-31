@@ -10,7 +10,7 @@ namespace ConsoleApp1
             => await args.CommandBuilder()
                 .Command("command1")
                     .Command("command1.1")
-                        .Option<int>("- -int-a", default, "c# name => inta")
+                        .Option<int>("--int-a", default, "c# name => inta")
                         .OnCommand((inta) =>
                         {
                             Console.WriteLine($"command1.1 {inta}");

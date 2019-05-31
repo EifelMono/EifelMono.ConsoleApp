@@ -7,9 +7,9 @@ namespace EifelMono.Commandline
 {
     public static class CommandBuilderExtensions
     {
-        public static CommandBuilderRoot CommandBuilder(this string[] thisValue, string name = null)
+        public static CommandBuilderRootCommand CommandBuilder(this string[] thisValue, string name = null)
         {
-            var result = new CommandBuilderRoot()
+            var result = new CommandBuilderRootCommand()
             {
                 Args = thisValue,
                 Command = new RootCommand(name),
@@ -34,7 +34,7 @@ namespace EifelMono.Commandline
             return rootCommand.InvokeAsync(thisValue.Args);
         }
 
-        public static CommandBuilderLevel1Command Command(this CommandBuilderRoot thisValue, string name, string description = null)
+        public static CommandBuilderLevel1Command Command(this CommandBuilderRootCommand thisValue, string name, string description = null)
         {
             var result = new CommandBuilderLevel1Command
             {
