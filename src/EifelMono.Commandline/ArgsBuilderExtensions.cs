@@ -18,7 +18,6 @@ namespace EifelMono.Commandline
             return result;
         }
 
-
         public static Task<int> RunAsync(this IArgsBuilderArgs thisValue)
         {
             foreach (var line in thisValue.Lines)
