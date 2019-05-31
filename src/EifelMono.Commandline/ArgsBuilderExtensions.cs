@@ -18,8 +18,16 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static Task<int> RunAsync(this IArgsBuilderArgs thisValue, IConsole console = null)
-            => (thisValue.Command as RootCommand).InvokeAsync(thisValue.Args, console);
+
+        public static Task<int> RunAsync(this IArgsBuilderArgs thisValue)
+        {
+            foreach (var line in thisValue.Lines)
+                if (thisValue.Console is object)
+                    thisValue.Console.Out.WriteLine(line);
+                else
+                    Console.WriteLine(line);
+            return (thisValue.Command as RootCommand).InvokeAsync(thisValue.Args, thisValue.Console);
+        }
 
         public static ArgsBuilderLevel1Command Command(this ArgsBuilderRootCommand thisValue, string name, string description = null)
         {
@@ -42,6 +50,35 @@ namespace EifelMono.Commandline
             thisValue.Command.AddCommand(result.Command);
             return result;
         }
+
+        public static T WriteLine<T>(this T thisValue, string line) where T : ArgsBuilderRootCommand
+        {
+            thisValue.Lines.Add(line);
+            return thisValue;
+        }
+        public static T SplitLine<T>(this T thisValue, char @char = '-', int count = 79) where T : ArgsBuilderRootCommand
+        {
+            thisValue.Lines.Add(new string(@char, count));
+            return thisValue;
+        }
+        public static T EmptyLine<T>(this T thisValue) where T : ArgsBuilderRootCommand
+        {
+            thisValue.Lines.Add("");
+            return thisValue;
+        }
+
+        public static T ArgsLine<T>(this T thisValue) where T : ArgsBuilderRootCommand
+        {
+            thisValue.Lines.Add($"args={string.Join("|", thisValue.Args)}");
+            return thisValue;
+        }
+
+        public static T UseTerminal<T>(this T thisValue, IConsole console) where T : ArgsBuilderRootCommand
+        {
+            thisValue.Console = console;
+            return thisValue;
+        }
+
 
         public static T Alias<T>(this T thisValue, string name) where T : IArgsBuilderAlias
         {

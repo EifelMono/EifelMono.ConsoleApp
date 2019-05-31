@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using EifelMono.Commandline;
+using EifelMono.Fluent.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,55 +12,57 @@ namespace EifelMono.CommandlineTests
 
         public ArgTests(ITestOutputHelper output) : base(output) { }
 
-        [Fact]
-        public async void RootCommand_WithtoutOption_Tests()
+        [Theory]
+        [InlineData(0, true)]
+        [InlineData(1, false, "--string-a", "Hello", "--int-x", "4711")]
+        [InlineData(1, false, "--string-ax", "Hello", "--int-x", "4711")]
+        [InlineData(1, false, "--string-a", "Hello", "--int-x", "4711a")]
+        public async void RootCommand_WithtoutOption_Tests(int shouldValue, bool shouldInCommand, params string[] args)
         {
-            Console.WriteLine("Hello World");
-            Console.Error.WriteLine("Hello Error");
-            try
-            {
-                var args = new string[] { };
-                var value = await args.ArgsBuilder()
-                    .OnCommand(() =>
-                    {
-                        WriteLine("RootCommand");
-                    })
-                    .RunAsync(TestTerminal);
-            }
-            finally
-            {
-                DumpTestTerminal();
-            }
+            bool inCommand = false;
+            var value = await args.ArgsBuilder()
+                .WriteLine(nameof(RootCommand_WithtoutOption_Tests))
+                .ArgsLine()
+                .SplitLine()
+                .UseTerminal(TestTerminal)
+                .OnCommand(() =>
+                {
+                    WriteLine($"RootCommand");
+                    inCommand = true;
+                })
+                .RunAsync();
+            DumpTestTerminal();
+            Assert.Equal(shouldInCommand, inCommand);
+            Assert.Equal(shouldValue, value);
         }
 
         [Theory]
         [InlineData(0, true, "--string-a", "Hello", "--int-x", "4711")]
         [InlineData(1, false, "--string-ax", "Hello", "--int-x", "4711")]
         [InlineData(1, false, "--string-a", "Hello", "--int-x", "4711a")]
+        // why is result 1 ?
         [InlineData(1, true)]
         public async void RootCommand_WithOption_Tests(int shouldValue, bool shouldInCommand, params string[] args)
         {
-            try
-            {
-                bool inCommand = false;
-                var value = await args.ArgsBuilder()
-                    .Option<string>("--string-a", default, "c# => stringa")
-                    .Option<int>("--int-x", default, "c# => intx")
-                    .OnCommand((stringa, intx) =>
-                    {
-                        WriteLine($"RootCommand stringa={stringa} intx={intx}");
-                        inCommand = true;
-                        Assert.Equal(args[1], stringa);
-                        Assert.Equal(args[3], intx.ToString());
-                    })
-                    .RunAsync(TestTerminal);
-                Assert.Equal(shouldInCommand, inCommand);
-                Assert.Equal(shouldValue, value);
-            }
-            finally
-            {
-                DumpTestTerminal();
-            }
+            bool inCommand = false;
+            var value = await args.ArgsBuilder()
+                .WriteLine(nameof(RootCommand_WithOption_Tests))
+                .ArgsLine()
+                .SplitLine()
+                .UseTerminal(TestTerminal)
+                .Option<string>("--string-a", default, "c# => stringa")
+                .Option<int>("--int-x", default, "c# => intx")
+                .OnCommand((stringa, intx) =>
+                {
+                    WriteLine($"RootCommand stringa={stringa} intx={intx}");
+                    inCommand = true;
+                    Assert.Equal(args[1], stringa);
+                    Assert.Equal(args[3], intx.ToString());
+                })
+                .RunAsync();
+            DumpTestTerminal();
+            Assert.Equal(shouldInCommand, inCommand);
+            Assert.Equal(shouldValue, value);
         }
 
         [Fact]
@@ -67,6 +70,10 @@ namespace EifelMono.CommandlineTests
         {
             var args = new string[] { };
             var value = await args.ArgsBuilder()
+                .WriteLine(nameof(RootCommand1Tests))
+                .ArgsLine()
+                .SplitLine()
+                .UseTerminal(TestTerminal)
                 .Command("command1")
                     .Alias("-c1")
                     .Option<int>("--int-a", default, "c# name => inta")
@@ -88,6 +95,10 @@ namespace EifelMono.CommandlineTests
         {
             var args = new string[] { };
             var value = await args.ArgsBuilder()
+                .WriteLine(nameof(AllTests))
+                .ArgsLine()
+                .SplitLine()
+                .UseTerminal(TestTerminal)
                 .Command("command1")
                     .Command("command1.1")
                         .Option<int>("--int-a", default, "c# name => inta")
@@ -120,7 +131,7 @@ namespace EifelMono.CommandlineTests
                 {
                     WriteLine("RootCommand");
                 })
-                .RunAsync(TestTerminal);
+                .RunAsync();
         }
     }
 }

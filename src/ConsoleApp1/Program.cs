@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EifelMono.Commandline;
+using EifelMono.Fluent;
 
 namespace ConsoleApp1
 {
@@ -10,21 +11,19 @@ namespace ConsoleApp1
 
         static async Task<int> Main(string[] args)
         {
-            args = new string[]
-            {
-                "--string-ax",
-                "Hello",
-                "--int-x",
-                "4711"
-            };
             var value = await args.ArgsBuilder()
-                  .Option<string>("--string-a", default, "c# => stringa")
-                  .Option<int>("--int-x", default, "c# => intx")
-                  .OnCommand((stringa, intx) =>
-                  {
-                      Console.WriteLine($"RootCommand stringa={stringa} intx={intx}");
-                  })
-                  .RunAsync();
+                .WriteLine($"ConsoleApp1 {fluent.App.Version}")
+                .SplitLine()
+                .ArgsLine()
+                .SplitLine()
+                .Option<string>("--string-a", default, "c# => stringa")
+                .Option<int>("--int-x", default, "c# => intx")
+                .Option<DayOfWeek>("--dow", default, "c# => dow")
+                .OnCommand((stringa, intx, dow) =>
+                {
+                    Console.WriteLine($"RootCommand stringa={stringa} intx={intx} dow={dow}");
+                })
+                .RunAsync();
             return value;
         }
         //static async Task<int> Main(string[] args)
