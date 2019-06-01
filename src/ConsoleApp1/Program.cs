@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using EifelMono.Commandline;
 using EifelMono.Fluent;
+using EifelMono.Fluent.Extensions;
 
 namespace ConsoleApp1
 {
     class Program
     {
-        static readonly int s_useTest = 1;
         static Task<int> Main(string[] args)
-            => s_useTest switch
+            => (args.Length > 0 ? args[0] : "4711")
+            .Pipe((x) => Console.WriteLine("Attention ! suggest does not work here!"))
+            switch
             {
-                1 => Main1(args),
-                2 => Main2(args),
+                "1" => Main1(args.Skip(1).ToArray()),
+                "2" => Main2(args.Skip(1).ToArray()),
                 _ => Task.FromResult(4711),
             };
 
