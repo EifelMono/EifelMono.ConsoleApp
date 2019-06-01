@@ -15,7 +15,7 @@ namespace EifelMono.Commandline
 
     internal static class InternalArgsBuilderExtension
     {
-        public static T Clone<T>(this T thisValue, ArgsBuilder fromValue) where T : ArgsBuilder
+        internal static T Clone<T>(this T thisValue, ArgsBuilder fromValue) where T : ArgsBuilder
         {
             thisValue.Args = fromValue.Args;
             thisValue.Parent = fromValue.Parent;
