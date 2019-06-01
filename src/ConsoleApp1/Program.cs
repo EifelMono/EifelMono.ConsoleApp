@@ -7,12 +7,18 @@ namespace ConsoleApp1
 {
     class Program
     {
-        static async Task<int> Main(string[] args)
-            => await MainXxX(args);
+        static readonly int s_useTest = 1;
+        static Task<int> Main(string[] args)
+            => s_useTest switch
+            {
+                1 => Main1(args),
+                2 => Main2(args),
+                _ => Task.FromResult(4711),
+            };
 
-        static Task<int> MainX(string[] args)
-            => args.ArgsBuilder(nameof(MainX))
-                .WriteLine($"{nameof(ConsoleApp1)} {nameof(MainX)} {fluent.App.Version}")
+        static Task<int> Main1(string[] args)
+            => args.ArgsCommandBuilder(nameof(Main1))
+                .WriteLine($"{nameof(ConsoleApp1)} {nameof(Main1)} {fluent.App.Version}")
                 .SplitLine().ArgsLine().SplitLine().NewLine()
                 .Option<string>("--string-a", default, "c# => stringa")
                 .Option<int>("--int-x", default, "c# => intx")
@@ -23,9 +29,9 @@ namespace ConsoleApp1
                 })
                 .RunAsync();
 
-        static Task<int> MainXxX(string[] args)
-            => args.ArgsBuilder()
-                .WriteLine($"{nameof(ConsoleApp1)} {nameof(MainXxX)} {fluent.App.Version}")
+        static Task<int> Main2(string[] args)
+            => args.ArgsCommandBuilder()
+                .WriteLine($"{nameof(ConsoleApp1)} {nameof(Main2)} {fluent.App.Version}")
                 .SplitLine().ArgsLine().SplitLine().NewLine()
                 .Command("command1")
                     .Alias("-c1")

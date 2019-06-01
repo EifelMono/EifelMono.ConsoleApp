@@ -20,7 +20,7 @@ namespace EifelMono.CommandlineTests
         public async void RootCommand_WithtoutOption_Tests(int shouldValue, bool shouldInCommand, params string[] args)
         {
             bool inCommand = false;
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .OnRootCommand(() =>
                 {
@@ -42,7 +42,7 @@ namespace EifelMono.CommandlineTests
         public async void RootCommand_WithOption_Tests(int shouldValue, bool shouldInCommand, params string[] args)
         {
             bool inCommand = false;
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .Option<string>("--string-a", default, "c# => stringa")
                 .Option<int>("--int-x", default, "c# => intx")
@@ -63,7 +63,7 @@ namespace EifelMono.CommandlineTests
         public async void RootCommand1Tests()
         {
             var args = new string[] { };
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .Command("command1")
                     .Alias("-c1")
@@ -85,7 +85,7 @@ namespace EifelMono.CommandlineTests
         public async void AllTests()
         {
             var args = new string[] { };
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .Command("command1")
                     .Command("command1.1")

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace EifelMono.Commandline
 {
-    public static class ArgsBuilderExtensions
+    public static class ArgsCommandBuilderExtensions
     {
-        public static ArgsBuilderRootCommand ArgsBuilder(this string[] thisValue, string description = null)
+        public static ArgsCommandBuilderRootCommand ArgsCommandBuilder(this string[] thisValue, string description = null)
         {
-            var result = new ArgsBuilderRootCommand()
+            var result = new ArgsCommandBuilderRootCommand()
             {
                 Args = thisValue,
                 Command = new RootCommand(description),
@@ -18,7 +18,7 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static Task<int> RunAsync(this IArgsBuilderArgs thisValue)
+        public static Task<int> RunAsync(this IArgsComamandBuilderArgs thisValue)
         {
             foreach (var line in thisValue.Lines)
                 if (thisValue.Console is object)
@@ -28,9 +28,9 @@ namespace EifelMono.Commandline
             return (thisValue.Command as RootCommand).InvokeAsync(thisValue.Args, thisValue.Console);
         }
 
-        public static ArgsBuilderLevel1Command Command(this ArgsBuilderRootCommand thisValue, string name, string description = null)
+        public static ArgsCommandBuilderLevel1Command Command(this ArgsCommandBuilderRootCommand thisValue, string name, string description = null)
         {
-            var result = new ArgsBuilderLevel1Command
+            var result = new ArgsCommandBuilderLevel1Command
             {
                 Command = new Command(name, description),
                 Parent = thisValue
@@ -39,9 +39,9 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static ArgsBuilderLevel2Command Command(this ArgsBuilderLevel1Command thisValue, string name, string description = null)
+        public static ArgsCommandBuilderLevel2Command Command(this ArgsCommandBuilderLevel1Command thisValue, string name, string description = null)
         {
-            var result = new ArgsBuilderLevel2Command
+            var result = new ArgsCommandBuilderLevel2Command
             {
                 Command = new Command(name, description),
                 Parent = thisValue
@@ -50,9 +50,9 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static ArgsBuilderLevel3Command Command(this ArgsBuilderLevel2Command thisValue, string name, string description = null)
+        public static ArgsCommandBuilderLevel3Command Command(this ArgsCommandBuilderLevel2Command thisValue, string name, string description = null)
         {
-            var result = new ArgsBuilderLevel3Command
+            var result = new ArgsCommandBuilderLevel3Command
             {
                 Command = new Command(name, description),
                 Parent = thisValue
@@ -61,9 +61,9 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static ArgsBuilderLevel4Command Command(this ArgsBuilderLevel3Command thisValue, string name, string description = null)
+        public static ArgsCommandBuilderLevel4Command Command(this ArgsCommandBuilderLevel3Command thisValue, string name, string description = null)
         {
-            var result = new ArgsBuilderLevel4Command
+            var result = new ArgsCommandBuilderLevel4Command
             {
                 Command = new Command(name, description),
                 Parent = thisValue
@@ -72,9 +72,9 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static ArgsBuilderLevel5Command Command(this ArgsBuilderLevel4Command thisValue, string name, string description = null)
+        public static ArgsCommandBuilderLevel5Command Command(this ArgsCommandBuilderLevel4Command thisValue, string name, string description = null)
         {
-            var result = new ArgsBuilderLevel5Command
+            var result = new ArgsCommandBuilderLevel5Command
             {
                 Command = new Command(name, description),
                 Parent = thisValue
@@ -83,9 +83,9 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static ArgsBuilderLevel6Command Command(this ArgsBuilderLevel5Command thisValue, string name, string description = null)
+        public static ArgsCommandBuilderLevel6Command Command(this ArgsCommandBuilderLevel5Command thisValue, string name, string description = null)
         {
-            var result = new ArgsBuilderLevel6Command
+            var result = new ArgsCommandBuilderLevel6Command
             {
                 Command = new Command(name, description),
                 Parent = thisValue
@@ -94,38 +94,38 @@ namespace EifelMono.Commandline
             return result;
         }
 
-        public static T Alias<T>(this T thisValue, string name) where T : IArgsBuilderAlias
+        public static T Alias<T>(this T thisValue, string name) where T : IArgsCommandBuilderAlias
         {
             thisValue.Command.AddAlias(name);
             return thisValue;
         }
 
-        public static T WriteLine<T>(this T thisValue, string line) where T : ArgsBuilderRootCommand
+        public static T WriteLine<T>(this T thisValue, string line) where T : ArgsCommandBuilderRootCommand
         {
             thisValue.Lines.Add(line);
             return thisValue;
         }
-        public static T SplitLine<T>(this T thisValue, char @char = '-', int count = 79) where T : ArgsBuilderRootCommand
+        public static T SplitLine<T>(this T thisValue, char @char = '-', int count = 79) where T : ArgsCommandBuilderRootCommand
         {
             thisValue.Lines.Add(new string(@char, count));
             return thisValue;
         }
-        public static T EmptyLine<T>(this T thisValue) where T : ArgsBuilderRootCommand
+        public static T EmptyLine<T>(this T thisValue) where T : ArgsCommandBuilderRootCommand
         {
             thisValue.Lines.Add("");
             return thisValue;
         }
 
-        public static T NewLine<T>(this T thisValue) where T : ArgsBuilderRootCommand
+        public static T NewLine<T>(this T thisValue) where T : ArgsCommandBuilderRootCommand
             => thisValue.EmptyLine();
 
-        public static T ArgsLine<T>(this T thisValue) where T : ArgsBuilderRootCommand
+        public static T ArgsLine<T>(this T thisValue) where T : ArgsCommandBuilderRootCommand
         {
             thisValue.Lines.Add($"args={string.Join("|", thisValue.Args)}");
             return thisValue;
         }
 
-        public static T UseTerminal<T>(this T thisValue, IConsole console) where T : ArgsBuilderRootCommand
+        public static T UseTerminal<T>(this T thisValue, IConsole console) where T : ArgsCommandBuilderRootCommand
         {
             thisValue.Console = console;
             return thisValue;

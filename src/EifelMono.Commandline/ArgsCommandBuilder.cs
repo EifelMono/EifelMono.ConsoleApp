@@ -3,19 +3,19 @@ using System.CommandLine;
 
 namespace EifelMono.Commandline
 {
-    public class ArgsBuilder
+    public class ArgsCommandBuilder
     {
         public string[] Args { get; set; } = null;
-        public ArgsBuilder Parent { get; set; } = null;
+        public ArgsCommandBuilder Parent { get; set; } = null;
         public Command Command { get; set; }
 
         public List<string> Lines { get; set; } = new List<string>();
         public IConsole Console { get; set; } = null;
     }
 
-    internal static class InternalArgsBuilderExtension
+    internal static class InternalArgsCommandBuilderExtension
     {
-        internal static T Clone<T>(this T thisValue, ArgsBuilder fromValue) where T : ArgsBuilder
+        internal static T Clone<T>(this T thisValue, ArgsCommandBuilder fromValue) where T : ArgsCommandBuilder
         {
             thisValue.Args = fromValue.Args;
             thisValue.Parent = fromValue.Parent;
@@ -26,12 +26,12 @@ namespace EifelMono.Commandline
         }
     }
 
-    public interface IArgsBuilderAlias
+    public interface IArgsCommandBuilderAlias
     {
         Command Command { get; set; }
     }
 
-    public interface IArgsBuilderArgs
+    public interface IArgsComamandBuilderArgs
     {
         string[] Args { get; set; }
         Command Command { get; set; }

@@ -10,11 +10,38 @@ namespace EifelMono.CommandlineTests
 
         [Theory]
         [InlineData("RootCommand")]
-        [InlineData("--Level1-1", "--Level1-1")]
-        public async void Play_Level1_WithRootCommand__Tests(string expectedResult, params string[] args)
+        public async void Play_Root_WithRootCommand_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
+                .Alias("Test")
+                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .OnRootCommand(() => commandResult += "RootCommand")
+                .RunAsync();
+            DumpTestTerminal();
+            Assert.Equal(expectedResult, commandResult);
+        }
+
+        [Theory]
+        [InlineData("")]
+        public async void Play_Root_WithoutRootCommand_Tests(string expectedResult, params string[] args)
+        {
+            var commandResult = "";
+            var value = await args.ArgsCommandBuilder()
+                .Alias("Test")
+                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .RunAsync();
+            DumpTestTerminal();
+            Assert.Equal(expectedResult, commandResult);
+        }
+
+        [Theory]
+        [InlineData("RootCommand")]
+        [InlineData("--Level1-1", "--Level1-1")]
+        public async void Play_Level1_WithRootCommand_Tests(string expectedResult, params string[] args)
+        {
+            var commandResult = "";
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                     .OnCommand(() => commandResult += "--Level1-1")
@@ -27,10 +54,10 @@ namespace EifelMono.CommandlineTests
         [Theory]
         [InlineData("")]
         [InlineData("--Level1-1", "--Level1-1")]
-        public async void Play_Level1WithoutRootCommand__Tests(string expectedResult, params string[] args)
+        public async void Play_Level1_WithoutRootCommand_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                     .OnCommand(() => commandResult += "--Level1-1")
@@ -43,10 +70,10 @@ namespace EifelMono.CommandlineTests
         [InlineData("")]
         [InlineData("--Level1-1", "--Level1-1")]
         [InlineData("--Level1-2", "--Level1-1", "--Level1-2")]
-        public async void Play_Level2_WithoutRootCommand__Tests(string expectedResult, params string[] args)
+        public async void Play_Level2_WithoutRootCommand_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
@@ -66,10 +93,10 @@ namespace EifelMono.CommandlineTests
         [InlineData("--Level1-4", "--Level1-1", "--Level1-2", "--Level1-3", "--Level1-4")]
         [InlineData("--Level1-5", "--Level1-1", "--Level1-2", "--Level1-3", "--Level1-4", "--Level1-5")]
         [InlineData("--Level1-6", "--Level1-1", "--Level1-2", "--Level1-3", "--Level1-4", "--Level1-5", "--Level1-6")]
-        public async void Play_LevelWithRootCommand_Tests(string expectedResult, params string[] args)
+        public async void Play_Level_WithRootCommand_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
@@ -97,10 +124,10 @@ namespace EifelMono.CommandlineTests
         [InlineData("--Level1-4", "--Level1-1", "--Level1-2", "--Level1-3", "--Level1-4")]
         [InlineData("--Level1-5", "--Level1-1", "--Level1-2", "--Level1-3", "--Level1-4", "--Level1-5")]
         [InlineData("--Level1-6", "--Level1-1", "--Level1-2", "--Level1-3", "--Level1-4", "--Level1-5", "--Level1-6")]
-        public async void Play_LevelWithoutRootCommand_Tests(string expectedResult, params string[] args)
+        public async void Play_Level_WithoutRootCommand_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
@@ -130,7 +157,7 @@ namespace EifelMono.CommandlineTests
         public async void Command_Level_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
@@ -173,7 +200,7 @@ namespace EifelMono.CommandlineTests
         public async void Commands_Level_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsBuilder()
+            var value = await args.ArgsCommandBuilder()
                 .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")

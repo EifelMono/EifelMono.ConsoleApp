@@ -5,11 +5,13 @@
     <LangVersion>preview</LangVersion>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Version>4.7.1.1</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EifelMono.Fluent" Version="0.0.16" />
-    <PackageReference Include="System.CommandLine.Experimental" Version="0.2.0-alpha.19272.1" />
+    <PackageReference Include="System.CommandLine.Experimental" Version="0.2.0-alpha.19281.2" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0-preview.1.build.745" />
   </ItemGroup>
 
