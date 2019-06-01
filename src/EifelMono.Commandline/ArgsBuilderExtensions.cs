@@ -50,6 +50,12 @@ namespace EifelMono.Commandline
             return result;
         }
 
+        public static T Alias<T>(this T thisValue, string name) where T : IArgsBuilderAlias
+        {
+            thisValue.Command.AddAlias(name);
+            return thisValue;
+        }
+
         public static T WriteLine<T>(this T thisValue, string line) where T : ArgsBuilderRootCommand
         {
             thisValue.Lines.Add(line);
@@ -78,13 +84,6 @@ namespace EifelMono.Commandline
         public static T UseTerminal<T>(this T thisValue, IConsole console) where T : ArgsBuilderRootCommand
         {
             thisValue.Console = console;
-            return thisValue;
-        }
-
-
-        public static T Alias<T>(this T thisValue, string name) where T : IArgsBuilderAlias
-        {
-            thisValue.Command.AddAlias(name);
             return thisValue;
         }
     }
