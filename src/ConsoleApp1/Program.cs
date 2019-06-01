@@ -17,7 +17,7 @@ namespace ConsoleApp1
                 .Option<string>("--string-a", default, "c# => stringa")
                 .Option<int>("--int-x", default, "c# => intx")
                 .Option<DayOfWeek>("--dow", default, "c# => dow")
-                .OnCommand((stringa, intx, dow) =>
+                .OnRootCommand((stringa, intx, dow) =>
                 {
                     Console.WriteLine($"RootCommand stringa={stringa} intx={intx} dow={dow}");
                 })
@@ -55,7 +55,7 @@ namespace ConsoleApp1
                     {
                         Console.WriteLine($"command2 {dow}");
                     })
-                .OnCommand(() =>
+                .OnRootCommand(() =>
                 {
                     Console.WriteLine("RootCommand");
                 })

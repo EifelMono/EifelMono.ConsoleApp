@@ -14,7 +14,7 @@ namespace EifelMono.Commandline
             return new ArgsBuilderRootOption<T1>().Clone(this);
         }
 
-        public IArgsBuilderArgs OnCommand(Action action = null)
+        public IArgsBuilderArgs OnRootCommand(Action action = null)
         {
             if (action is object)
                 Command.Handler = CommandHandler.Create(action);
@@ -30,7 +30,7 @@ namespace EifelMono.Commandline
             return new ArgsBuilderRootOption<T1, T2>().Clone(this);
         }
 
-        public IArgsBuilderArgs OnCommand(Action<T1> action)
+        public IArgsBuilderArgs OnRootCommand(Action<T1> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;
@@ -45,7 +45,7 @@ namespace EifelMono.Commandline
             return new ArgsBuilderRootOption<T1, T2, T3>().Clone(this);
         }
 
-        public IArgsBuilderArgs OnCommand(Action<T1, T2> action)
+        public IArgsBuilderArgs OnRootCommand(Action<T1, T2> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;
@@ -59,7 +59,7 @@ namespace EifelMono.Commandline
             return new ArgsBuilderRootOption<T1, T2, T3, T4>().Clone(this);
         }
 
-        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3> action)
+        public IArgsBuilderArgs OnRootCommand(Action<T1, T2, T3> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;
@@ -74,7 +74,7 @@ namespace EifelMono.Commandline
             return new ArgsBuilderRootOption<T1, T2, T3, T4, T5>().Clone(this);
         }
 
-        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4> action)
+        public IArgsBuilderArgs OnRootCommand(Action<T1, T2, T3, T4> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;
@@ -89,7 +89,7 @@ namespace EifelMono.Commandline
             return new ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6>().Clone(this);
         }
 
-        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4, T5> action)
+        public IArgsBuilderArgs OnRootCommand(Action<T1, T2, T3, T4, T5> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;
@@ -104,7 +104,7 @@ namespace EifelMono.Commandline
             return new ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6, T7>().Clone(this);
         }
 
-        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4, T5, T6> action)
+        public IArgsBuilderArgs OnRootCommand(Action<T1, T2, T3, T4, T5, T6> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;
@@ -113,7 +113,7 @@ namespace EifelMono.Commandline
 
     public class ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6, T7> : ArgsBuilderRoot, IArgsBuilderArgs
     {
-        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4, T5, T6, T7> action)
+        public IArgsBuilderArgs OnRootCommand(Action<T1, T2, T3, T4, T5, T6, T7> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;
