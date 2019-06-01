@@ -53,7 +53,67 @@ namespace EifelMono.Commandline
     }
     public class ArgsBuilderRootOption<T1, T2, T3> : ArgsBuilderRoot, IArgsBuilderArgs
     {
+        public ArgsBuilderRootOption<T1, T2, T3, T4> Option<T4>(string name, T4 defaultValue = default, string description = null, bool isHidden = false)
+        {
+            Command.AddOption(new Option(name, description, new Argument<T4>(defaultValue), isHidden));
+            return new ArgsBuilderRootOption<T1, T2, T3, T4>().Clone(this);
+        }
+
         public IArgsBuilderArgs OnCommand(Action<T1, T2, T3> action)
+        {
+            Command.Handler = CommandHandler.Create(action);
+            return this;
+        }
+    }
+
+    public class ArgsBuilderRootOption<T1, T2, T3, T4> : ArgsBuilderRoot, IArgsBuilderArgs
+    {
+        public ArgsBuilderRootOption<T1, T2, T3, T4, T5> Option<T5>(string name, T5 defaultValue = default, string description = null, bool isHidden = false)
+        {
+            Command.AddOption(new Option(name, description, new Argument<T5>(defaultValue), isHidden));
+            return new ArgsBuilderRootOption<T1, T2, T3, T4, T5>().Clone(this);
+        }
+
+        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4> action)
+        {
+            Command.Handler = CommandHandler.Create(action);
+            return this;
+        }
+    }
+
+    public class ArgsBuilderRootOption<T1, T2, T3, T4, T5> : ArgsBuilderRoot, IArgsBuilderArgs
+    {
+        public ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6> Option<T6>(string name, T6 defaultValue = default, string description = null, bool isHidden = false)
+        {
+            Command.AddOption(new Option(name, description, new Argument<T6>(defaultValue), isHidden));
+            return new ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6>().Clone(this);
+        }
+
+        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4, T5> action)
+        {
+            Command.Handler = CommandHandler.Create(action);
+            return this;
+        }
+    }
+
+    public class ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6> : ArgsBuilderRoot, IArgsBuilderArgs
+    {
+        public ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6, T7> Option<T7>(string name, T7 defaultValue = default, string description = null, bool isHidden = false)
+        {
+            Command.AddOption(new Option(name, description, new Argument<T7>(defaultValue), isHidden));
+            return new ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6, T7>().Clone(this);
+        }
+
+        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4, T5, T6> action)
+        {
+            Command.Handler = CommandHandler.Create(action);
+            return this;
+        }
+    }
+
+    public class ArgsBuilderRootOption<T1, T2, T3, T4, T5, T6, T7> : ArgsBuilderRoot, IArgsBuilderArgs
+    {
+        public IArgsBuilderArgs OnCommand(Action<T1, T2, T3, T4, T5, T6, T7> action)
         {
             Command.Handler = CommandHandler.Create(action);
             return this;

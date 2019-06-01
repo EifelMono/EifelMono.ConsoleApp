@@ -50,6 +50,50 @@ namespace EifelMono.Commandline
             return result;
         }
 
+        public static ArgsBuilderLevel3Command Command(this ArgsBuilderLevel2Command thisValue, string name, string description = null)
+        {
+            var result = new ArgsBuilderLevel3Command
+            {
+                Command = new Command(name, description),
+                Parent = thisValue
+            };
+            thisValue.Command.AddCommand(result.Command);
+            return result;
+        }
+
+        public static ArgsBuilderLevel4Command Command(this ArgsBuilderLevel3Command thisValue, string name, string description = null)
+        {
+            var result = new ArgsBuilderLevel4Command
+            {
+                Command = new Command(name, description),
+                Parent = thisValue
+            };
+            thisValue.Command.AddCommand(result.Command);
+            return result;
+        }
+
+        public static ArgsBuilderLevel5Command Command(this ArgsBuilderLevel4Command thisValue, string name, string description = null)
+        {
+            var result = new ArgsBuilderLevel5Command
+            {
+                Command = new Command(name, description),
+                Parent = thisValue
+            };
+            thisValue.Command.AddCommand(result.Command);
+            return result;
+        }
+
+        public static ArgsBuilderLevel6Command Command(this ArgsBuilderLevel5Command thisValue, string name, string description = null)
+        {
+            var result = new ArgsBuilderLevel6Command
+            {
+                Command = new Command(name, description),
+                Parent = thisValue
+            };
+            thisValue.Command.AddCommand(result.Command);
+            return result;
+        }
+
         public static T Alias<T>(this T thisValue, string name) where T : IArgsBuilderAlias
         {
             thisValue.Command.AddAlias(name);
