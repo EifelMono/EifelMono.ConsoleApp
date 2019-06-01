@@ -12,9 +12,7 @@ namespace ConsoleApp1
         {
             var value = await args.ArgsBuilder()
                 .WriteLine($"ConsoleApp1 {fluent.App.Version}")
-                .SplitLine()
-                .ArgsLine()
-                .SplitLine()
+                .SplitLine().ArgsLine().SplitLine().NewLine()
                 .Option<string>("--string-a", default, "c# => stringa")
                 .Option<int>("--int-x", default, "c# => intx")
                 .Option<DayOfWeek>("--dow", default, "c# => dow")

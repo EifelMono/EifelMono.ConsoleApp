@@ -66,6 +66,9 @@ namespace EifelMono.Commandline
             return thisValue;
         }
 
+        public static T NewLine<T>(this T thisValue) where T : ArgsBuilderRootCommand
+            => thisValue.EmptyLine();
+
         public static T ArgsLine<T>(this T thisValue) where T : ArgsBuilderRootCommand
         {
             thisValue.Lines.Add($"args={string.Join("|", thisValue.Args)}");

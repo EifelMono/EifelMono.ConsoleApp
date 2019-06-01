@@ -7,6 +7,7 @@ using Xunit;
 using Xunit.Abstractions;
 using System.CommandLine.Rendering;
 using System.CommandLine;
+using System.Diagnostics;
 
 namespace EifelMono.CommandlineTests
 {
@@ -67,6 +68,11 @@ namespace EifelMono.CommandlineTests
 
         public static void AssertOk()
            => Assert.True(true);
+
+        public string GetMethodName()
+        {
+            return new StackTrace(4).GetFrame(0).GetMethod().Name;
+        }
     }
 }
 

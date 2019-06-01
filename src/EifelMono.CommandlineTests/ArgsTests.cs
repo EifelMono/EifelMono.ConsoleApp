@@ -9,7 +9,6 @@ namespace EifelMono.CommandlineTests
 {
     public class ArgTests : XunitCore
     {
-
         public ArgTests(ITestOutputHelper output) : base(output) { }
 
         [Theory]
@@ -21,10 +20,7 @@ namespace EifelMono.CommandlineTests
         {
             bool inCommand = false;
             var value = await args.ArgsBuilder()
-                .WriteLine(nameof(RootCommand_WithtoutOption_Tests))
-                .ArgsLine()
-                .SplitLine()
-                .UseTerminal(TestTerminal)
+                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .OnCommand(() =>
                 {
                     WriteLine($"RootCommand");
@@ -46,10 +42,7 @@ namespace EifelMono.CommandlineTests
         {
             bool inCommand = false;
             var value = await args.ArgsBuilder()
-                .WriteLine(nameof(RootCommand_WithOption_Tests))
-                .ArgsLine()
-                .SplitLine()
-                .UseTerminal(TestTerminal)
+                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .Option<string>("--string-a", default, "c# => stringa")
                 .Option<int>("--int-x", default, "c# => intx")
                 .OnCommand((stringa, intx) =>
@@ -70,10 +63,7 @@ namespace EifelMono.CommandlineTests
         {
             var args = new string[] { };
             var value = await args.ArgsBuilder()
-                .WriteLine(nameof(RootCommand1Tests))
-                .ArgsLine()
-                .SplitLine()
-                .UseTerminal(TestTerminal)
+                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .Command("command1")
                     .Alias("-c1")
                     .Option<int>("--int-a", default, "c# name => inta")
@@ -95,10 +85,7 @@ namespace EifelMono.CommandlineTests
         {
             var args = new string[] { };
             var value = await args.ArgsBuilder()
-                .WriteLine(nameof(AllTests))
-                .ArgsLine()
-                .SplitLine()
-                .UseTerminal(TestTerminal)
+                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
                 .Command("command1")
                     .Command("command1.1")
                         .Option<int>("--int-a", default, "c# name => inta")
