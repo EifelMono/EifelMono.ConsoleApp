@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 
 namespace EifelMono.CommandlineTests
 {
-    public class OptionLevel3Tests : XunitCore
+    public class OptionLevel2Tests : XunitCore
     {
-        public OptionLevel3Tests(ITestOutputHelper output) : base(output) { }
+        public OptionLevel2Tests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public async void None_Tests()
