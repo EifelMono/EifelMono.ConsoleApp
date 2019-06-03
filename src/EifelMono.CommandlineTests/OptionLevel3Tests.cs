@@ -5,24 +5,28 @@ using Xunit.Abstractions;
 
 namespace EifelMono.CommandlineTests
 {
-    public class OptionLevel1Tests : XunitCore
+    public class OptionLevel2Tests : XunitCore
     {
-        public OptionLevel1Tests(ITestOutputHelper output) : base(output) { }
+        public OptionLevel2Tests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public async void None_Tests()
         {
             var commandResult = "";
-            var line = $"com1";
+            var line = $"com1 com2 com3";
             var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
             var value = await args.ArgsCommandBuilder()
                 .UseTerminal(TestTerminal)
                     .Command("com1")
+                    .Command("com2")
+                    .Command("com3")
+                    .OnCommand(() => commandResult += "InCommand3")
+                    .OnCommand(() => commandResult += "InCommand2")
                     .OnCommand(() => commandResult += "InCommand1")
                 .OnRootCommand(() => commandResult += "InCommandRoot")
                 .RunAsync();
             DumpTestTerminal();
-            Assert.Equal("InCommand1", commandResult);
+            Assert.Equal("InCommand3", commandResult);
         }
 
         [Fact]
@@ -31,22 +35,26 @@ namespace EifelMono.CommandlineTests
             foreach (var arg1 in fluent.Enum.Values<Type1>())
             {
                 var commandResult = "";
-                var line = $"com1 --var1 {arg1}";
+                var line = $"com1 com2 com3 --var1 {arg1}";
                 var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                 var value = await args.ArgsCommandBuilder()
                     .UseTerminal(TestTerminal)
                         .Command("com1")
+                        .Command("com2")
+                        .Command("com3")
                         .Option<Type1>("--var1")
                         .OnCommand((var1) =>
                         {
                             Assert.Equal(arg1.GetType(), var1.GetType());
                             Assert.Equal(arg1, var1);
-                            commandResult += "InCommand1";
+                            commandResult += "InCommand3";
                         })
+                        .OnCommand(() => commandResult += "InCommand2")
+                        .OnCommand(() => commandResult += "InCommand1")
                     .OnRootCommand(() => commandResult += "InCommandRoot")
                     .RunAsync();
                 DumpTestTerminal();
-                Assert.Equal("InCommand1", commandResult);
+                Assert.Equal("InCommand3", commandResult);
             }
         }
         [Fact]
@@ -56,11 +64,13 @@ namespace EifelMono.CommandlineTests
                 foreach (var arg2 in fluent.Enum.Values<Type2>())
                 {
                     var commandResult = "";
-                    var line = $"com1 --var1 {arg1} --var2 {arg2}";
+                    var line = $"com1 com2 com3 --var1 {arg1} --var2 {arg2}";
                     var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                     var value = await args.ArgsCommandBuilder()
                         .UseTerminal(TestTerminal)
                             .Command("com1")
+                            .Command("com2")
+                            .Command("com3")
                             .Option<Type1>("--var1")
                             .Option<Type2>("--var2")
                             .OnCommand((var1, var2) =>
@@ -69,12 +79,14 @@ namespace EifelMono.CommandlineTests
                                 Assert.Equal(arg1, var1);
                                 Assert.Equal(arg2.GetType(), var2.GetType());
                                 Assert.Equal(arg2, var2);
-                                commandResult += "InCommand1";
+                                commandResult += "InCommand3";
                             })
+                            .OnCommand(() => commandResult += "InCommand2")
+                            .OnCommand(() => commandResult += "InCommand1")
                         .OnRootCommand(() => commandResult += "InCommandRoot")
                         .RunAsync();
                     DumpTestTerminal();
-                    Assert.Equal("InCommand1", commandResult);
+                    Assert.Equal("InCommand3", commandResult);
                 }
         }
         [Fact]
@@ -85,11 +97,13 @@ namespace EifelMono.CommandlineTests
                     foreach (var arg3 in fluent.Enum.Values<Type3>())
                     {
                         var commandResult = "";
-                        var line = $"com1 --var1 {arg1} --var2 {arg2} --var3 {arg3}";
+                        var line = $"com1 com2 com3 --var1 {arg1} --var2 {arg2} --var3 {arg3}";
                         var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                         var value = await args.ArgsCommandBuilder()
                             .UseTerminal(TestTerminal)
                                 .Command("com1")
+                                .Command("com2")
+                                .Command("com3")
                                 .Option<Type1>("--var1")
                                 .Option<Type2>("--var2")
                                 .Option<Type3>("--var3")
@@ -101,12 +115,14 @@ namespace EifelMono.CommandlineTests
                                     Assert.Equal(arg2, var2);
                                     Assert.Equal(arg3.GetType(), var3.GetType());
                                     Assert.Equal(arg3, var3);
-                                    commandResult += "InCommand1";
+                                    commandResult += "InCommand3";
                                 })
+                                .OnCommand(() => commandResult += "InCommand2")
+                                .OnCommand(() => commandResult += "InCommand1")
                             .OnRootCommand(() => commandResult += "InCommandRoot")
                             .RunAsync();
                         DumpTestTerminal();
-                        Assert.Equal("InCommand1", commandResult);
+                        Assert.Equal("InCommand3", commandResult);
                     }
         }
         [Fact]
@@ -118,11 +134,13 @@ namespace EifelMono.CommandlineTests
                         foreach (var arg4 in fluent.Enum.Values<Type4>())
                         {
                             var commandResult = "";
-                            var line = $"com1 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4}";
+                            var line = $"com1 com2 com3 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4}";
                             var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                             var value = await args.ArgsCommandBuilder()
                                 .UseTerminal(TestTerminal)
                                     .Command("com1")
+                                    .Command("com2")
+                                    .Command("com3")
                                     .Option<Type1>("--var1")
                                     .Option<Type2>("--var2")
                                     .Option<Type3>("--var3")
@@ -137,12 +155,14 @@ namespace EifelMono.CommandlineTests
                                         Assert.Equal(arg3, var3);
                                         Assert.Equal(arg4.GetType(), var4.GetType());
                                         Assert.Equal(arg4, var4);
-                                        commandResult += "InCommand1";
+                                        commandResult += "InCommand3";
                                     })
+                                    .OnCommand(() => commandResult += "InCommand2")
+                                    .OnCommand(() => commandResult += "InCommand1")
                                 .OnRootCommand(() => commandResult += "InCommandRoot")
                                 .RunAsync();
                             DumpTestTerminal();
-                            Assert.Equal("InCommand1", commandResult);
+                            Assert.Equal("InCommand3", commandResult);
                         }
         }
         [Fact]
@@ -155,11 +175,13 @@ namespace EifelMono.CommandlineTests
                             foreach (var arg5 in fluent.Enum.Values<Type5>())
                             {
                                 var commandResult = "";
-                                var line = $"com1 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4} --var5 {arg5}";
+                                var line = $"com1 com2 com3 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4} --var5 {arg5}";
                                 var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                                 var value = await args.ArgsCommandBuilder()
                                     .UseTerminal(TestTerminal)
                                         .Command("com1")
+                                        .Command("com2")
+                                        .Command("com3")
                                         .Option<Type1>("--var1")
                                         .Option<Type2>("--var2")
                                         .Option<Type3>("--var3")
@@ -177,12 +199,14 @@ namespace EifelMono.CommandlineTests
                                             Assert.Equal(arg4, var4);
                                             Assert.Equal(arg5.GetType(), var5.GetType());
                                             Assert.Equal(arg5, var5);
-                                            commandResult += "InCommand1";
+                                            commandResult += "InCommand3";
                                         })
+                                        .OnCommand(() => commandResult += "InCommand2")
+                                        .OnCommand(() => commandResult += "InCommand1")
                                     .OnRootCommand(() => commandResult += "InCommandRoot")
                                     .RunAsync();
                                 DumpTestTerminal();
-                                Assert.Equal("InCommand1", commandResult);
+                                Assert.Equal("InCommand3", commandResult);
                             }
         }
         [Fact]
@@ -196,11 +220,13 @@ namespace EifelMono.CommandlineTests
                                 foreach (var arg6 in fluent.Enum.Values<Type6>())
                                 {
                                     var commandResult = "";
-                                    var line = $"com1 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4} --var5 {arg5} --var6 {arg6}";
+                                    var line = $"com1 com2 com3 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4} --var5 {arg5} --var6 {arg6}";
                                     var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                                     var value = await args.ArgsCommandBuilder()
                                         .UseTerminal(TestTerminal)
                                             .Command("com1")
+                                            .Command("com2")
+                                            .Command("com3")
                                             .Option<Type1>("--var1")
                                             .Option<Type2>("--var2")
                                             .Option<Type3>("--var3")
@@ -221,12 +247,14 @@ namespace EifelMono.CommandlineTests
                                                 Assert.Equal(arg5, var5);
                                                 Assert.Equal(arg6.GetType(), var6.GetType());
                                                 Assert.Equal(arg6, var6);
-                                                commandResult += "InCommand1";
+                                                commandResult += "InCommand3";
                                             })
+                                            .OnCommand(() => commandResult += "InCommand2")
+                                            .OnCommand(() => commandResult += "InCommand1")
                                         .OnRootCommand(() => commandResult += "InCommandRoot")
                                         .RunAsync();
                                     DumpTestTerminal();
-                                    Assert.Equal("InCommand1", commandResult);
+                                    Assert.Equal("InCommand3", commandResult);
                                 }
         }
         [Fact]
@@ -241,11 +269,13 @@ namespace EifelMono.CommandlineTests
                                     foreach (var arg7 in fluent.Enum.Values<Type7>())
                                     {
                                         var commandResult = "";
-                                        var line = $"com1 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4} --var5 {arg5} --var6 {arg6} --var7 {arg7}";
+                                        var line = $"com1 com2 com3 --var1 {arg1} --var2 {arg2} --var3 {arg3} --var4 {arg4} --var5 {arg5} --var6 {arg6} --var7 {arg7}";
                                         var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                                         var value = await args.ArgsCommandBuilder()
                                             .UseTerminal(TestTerminal)
                                                 .Command("com1")
+                                                .Command("com2")
+                                                .Command("com3")
                                                 .Option<Type1>("--var1")
                                                 .Option<Type2>("--var2")
                                                 .Option<Type3>("--var3")
@@ -269,12 +299,14 @@ namespace EifelMono.CommandlineTests
                                                     Assert.Equal(arg6, var6);
                                                     Assert.Equal(arg7.GetType(), var7.GetType());
                                                     Assert.Equal(arg7, var7);
-                                                    commandResult += "InCommand1";
+                                                    commandResult += "InCommand3";
                                                 })
+                                                .OnCommand(() => commandResult += "InCommand2")
+                                                .OnCommand(() => commandResult += "InCommand1")
                                             .OnRootCommand(() => commandResult += "InCommandRoot")
                                             .RunAsync();
                                         DumpTestTerminal();
-                                        Assert.Equal("InCommand1", commandResult);
+                                        Assert.Equal("InCommand3", commandResult);
                                     }
         }
 
@@ -284,22 +316,26 @@ namespace EifelMono.CommandlineTests
             foreach (var arg1 in fluent.Enum.Values<Type1>())
             {
                 var commandResult = "";
-                var line = $"com1";
+                var line = $"com1 com2 com3";
                 var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                 var value = await args.ArgsCommandBuilder()
                     .UseTerminal(TestTerminal)
                         .Command("com1")
+                        .Command("com2")
+                        .Command("com3")
                         .Option<Type1>("--var1", arg1)
                         .OnCommand((var1) =>
                         {
                             Assert.Equal(arg1.GetType(), var1.GetType());
                             Assert.Equal(arg1, var1);
-                            commandResult += "InCommand1";
+                            commandResult += "InCommand3";
                         })
+                        .OnCommand(() => commandResult += "InCommand2")
+                        .OnCommand(() => commandResult += "InCommand1")
                     .OnRootCommand(() => commandResult += "InCommandRoot")
                     .RunAsync();
                 DumpTestTerminal();
-                Assert.Equal("InCommand1", commandResult);
+                Assert.Equal("InCommand3", commandResult);
             }
         }
         [Fact]
@@ -309,11 +345,13 @@ namespace EifelMono.CommandlineTests
                 foreach (var arg2 in fluent.Enum.Values<Type2>())
                 {
                     var commandResult = "";
-                    var line = $"com1";
+                    var line = $"com1 com2 com3";
                     var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                     var value = await args.ArgsCommandBuilder()
                         .UseTerminal(TestTerminal)
                             .Command("com1")
+                            .Command("com2")
+                            .Command("com3")
                             .Option<Type1>("--var1", arg1)
                             .Option<Type2>("--var2", arg2)
                             .OnCommand((var1, var2) =>
@@ -322,12 +360,14 @@ namespace EifelMono.CommandlineTests
                                 Assert.Equal(arg1, var1);
                                 Assert.Equal(arg2.GetType(), var2.GetType());
                                 Assert.Equal(arg2, var2);
-                                commandResult += "InCommand1";
+                                commandResult += "InCommand3";
                             })
+                            .OnCommand(() => commandResult += "InCommand2")
+                            .OnCommand(() => commandResult += "InCommand1")
                         .OnRootCommand(() => commandResult += "InCommandRoot")
                         .RunAsync();
                     DumpTestTerminal();
-                    Assert.Equal("InCommand1", commandResult);
+                    Assert.Equal("InCommand3", commandResult);
                 }
         }
         [Fact]
@@ -338,11 +378,13 @@ namespace EifelMono.CommandlineTests
                     foreach (var arg3 in fluent.Enum.Values<Type3>())
                     {
                         var commandResult = "";
-                        var line = $"com1";
+                        var line = $"com1 com2 com3";
                         var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                         var value = await args.ArgsCommandBuilder()
                             .UseTerminal(TestTerminal)
                                 .Command("com1")
+                                .Command("com2")
+                                .Command("com3")
                                 .Option<Type1>("--var1", arg1)
                                 .Option<Type2>("--var2", arg2)
                                 .Option<Type3>("--var3", arg3)
@@ -354,12 +396,14 @@ namespace EifelMono.CommandlineTests
                                     Assert.Equal(arg2, var2);
                                     Assert.Equal(arg3.GetType(), var3.GetType());
                                     Assert.Equal(arg3, var3);
-                                    commandResult += "InCommand1";
+                                    commandResult += "InCommand3";
                                 })
+                                .OnCommand(() => commandResult += "InCommand2")
+                                .OnCommand(() => commandResult += "InCommand1")
                             .OnRootCommand(() => commandResult += "InCommandRoot")
                             .RunAsync();
                         DumpTestTerminal();
-                        Assert.Equal("InCommand1", commandResult);
+                        Assert.Equal("InCommand3", commandResult);
                     }
         }
         [Fact]
@@ -371,11 +415,13 @@ namespace EifelMono.CommandlineTests
                         foreach (var arg4 in fluent.Enum.Values<Type4>())
                         {
                             var commandResult = "";
-                            var line = $"com1";
+                            var line = $"com1 com2 com3";
                             var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                             var value = await args.ArgsCommandBuilder()
                                 .UseTerminal(TestTerminal)
                                     .Command("com1")
+                                    .Command("com2")
+                                    .Command("com3")
                                     .Option<Type1>("--var1", arg1)
                                     .Option<Type2>("--var2", arg2)
                                     .Option<Type3>("--var3", arg3)
@@ -390,12 +436,14 @@ namespace EifelMono.CommandlineTests
                                         Assert.Equal(arg3, var3);
                                         Assert.Equal(arg4.GetType(), var4.GetType());
                                         Assert.Equal(arg4, var4);
-                                        commandResult += "InCommand1";
+                                        commandResult += "InCommand3";
                                     })
+                                    .OnCommand(() => commandResult += "InCommand2")
+                                    .OnCommand(() => commandResult += "InCommand1")
                                 .OnRootCommand(() => commandResult += "InCommandRoot")
                                 .RunAsync();
                             DumpTestTerminal();
-                            Assert.Equal("InCommand1", commandResult);
+                            Assert.Equal("InCommand3", commandResult);
                         }
         }
         [Fact]
@@ -408,11 +456,13 @@ namespace EifelMono.CommandlineTests
                             foreach (var arg5 in fluent.Enum.Values<Type5>())
                             {
                                 var commandResult = "";
-                                var line = $"com1";
+                                var line = $"com1 com2 com3";
                                 var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                                 var value = await args.ArgsCommandBuilder()
                                     .UseTerminal(TestTerminal)
                                         .Command("com1")
+                                        .Command("com2")
+                                        .Command("com3")
                                         .Option<Type1>("--var1", arg1)
                                         .Option<Type2>("--var2", arg2)
                                         .Option<Type3>("--var3", arg3)
@@ -430,12 +480,14 @@ namespace EifelMono.CommandlineTests
                                             Assert.Equal(arg4, var4);
                                             Assert.Equal(arg5.GetType(), var5.GetType());
                                             Assert.Equal(arg5, var5);
-                                            commandResult += "InCommand1";
+                                            commandResult += "InCommand3";
                                         })
+                                        .OnCommand(() => commandResult += "InCommand2")
+                                        .OnCommand(() => commandResult += "InCommand1")
                                     .OnRootCommand(() => commandResult += "InCommandRoot")
                                     .RunAsync();
                                 DumpTestTerminal();
-                                Assert.Equal("InCommand1", commandResult);
+                                Assert.Equal("InCommand3", commandResult);
                             }
         }
         [Fact]
@@ -449,11 +501,13 @@ namespace EifelMono.CommandlineTests
                                 foreach (var arg6 in fluent.Enum.Values<Type6>())
                                 {
                                     var commandResult = "";
-                                    var line = $"com1";
+                                    var line = $"com1 com2 com3";
                                     var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                                     var value = await args.ArgsCommandBuilder()
                                         .UseTerminal(TestTerminal)
                                             .Command("com1")
+                                            .Command("com2")
+                                            .Command("com3")
                                             .Option<Type1>("--var1", arg1)
                                             .Option<Type2>("--var2", arg2)
                                             .Option<Type3>("--var3", arg3)
@@ -474,12 +528,14 @@ namespace EifelMono.CommandlineTests
                                                 Assert.Equal(arg5, var5);
                                                 Assert.Equal(arg6.GetType(), var6.GetType());
                                                 Assert.Equal(arg6, var6);
-                                                commandResult += "InCommand1";
+                                                commandResult += "InCommand3";
                                             })
+                                            .OnCommand(() => commandResult += "InCommand2")
+                                            .OnCommand(() => commandResult += "InCommand1")
                                         .OnRootCommand(() => commandResult += "InCommandRoot")
                                         .RunAsync();
                                     DumpTestTerminal();
-                                    Assert.Equal("InCommand1", commandResult);
+                                    Assert.Equal("InCommand3", commandResult);
                                 }
         }
         [Fact]
@@ -494,11 +550,13 @@ namespace EifelMono.CommandlineTests
                                     foreach (var arg7 in fluent.Enum.Values<Type7>())
                                     {
                                         var commandResult = "";
-                                        var line = $"com1";
+                                        var line = $"com1 com2 com3";
                                         var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
                                         var value = await args.ArgsCommandBuilder()
                                             .UseTerminal(TestTerminal)
                                                 .Command("com1")
+                                                .Command("com2")
+                                                .Command("com3")
                                                 .Option<Type1>("--var1", arg1)
                                                 .Option<Type2>("--var2", arg2)
                                                 .Option<Type3>("--var3", arg3)
@@ -522,12 +580,14 @@ namespace EifelMono.CommandlineTests
                                                     Assert.Equal(arg6, var6);
                                                     Assert.Equal(arg7.GetType(), var7.GetType());
                                                     Assert.Equal(arg7, var7);
-                                                    commandResult += "InCommand1";
+                                                    commandResult += "InCommand3";
                                                 })
+                                                .OnCommand(() => commandResult += "InCommand2")
+                                                .OnCommand(() => commandResult += "InCommand1")
                                             .OnRootCommand(() => commandResult += "InCommandRoot")
                                             .RunAsync();
                                         DumpTestTerminal();
-                                        Assert.Equal("InCommand1", commandResult);
+                                        Assert.Equal("InCommand3", commandResult);
                                     }
         }
     }

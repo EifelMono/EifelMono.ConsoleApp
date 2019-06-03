@@ -1,7 +1,5 @@
 using System;
-using System.Reflection;
 using EifelMono.Commandline;
-using EifelMono.Fluent.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 

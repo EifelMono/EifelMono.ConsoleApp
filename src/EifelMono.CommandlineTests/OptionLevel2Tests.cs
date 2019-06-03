@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using EifelMono.Commandline;
+﻿using EifelMono.Commandline;
 using EifelMono.Fluent;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace EifelMono.CommandlineTests
 {
-    public class OptionLevel2Tests : XunitCore
+    public class OptionLevel3Tests : XunitCore
     {
-        public OptionLevel2Tests(ITestOutputHelper output) : base(output) { }
+        public OptionLevel3Tests(ITestOutputHelper output) : base(output) { }
 
         [Fact]
         public async void None_Tests()
@@ -44,9 +42,9 @@ namespace EifelMono.CommandlineTests
                         .Option<Type1>("--var1")
                         .OnCommand((var1) =>
                         {
-                            commandResult += "InCommand2";
                             Assert.Equal(arg1.GetType(), var1.GetType());
                             Assert.Equal(arg1, var1);
+                            commandResult += "InCommand2";
                         })
                         .OnCommand(() => commandResult += "InCommand1")
                     .OnRootCommand(() => commandResult += "InCommandRoot")
@@ -311,9 +309,9 @@ namespace EifelMono.CommandlineTests
                         .Option<Type1>("--var1", arg1)
                         .OnCommand((var1) =>
                         {
-                            commandResult += "InCommand2";
                             Assert.Equal(arg1.GetType(), var1.GetType());
                             Assert.Equal(arg1, var1);
+                            commandResult += "InCommand2";
                         })
                         .OnCommand(() => commandResult += "InCommand1")
                     .OnRootCommand(() => commandResult += "InCommandRoot")

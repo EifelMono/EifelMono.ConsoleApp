@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EifelMono.Commandline;
+﻿using EifelMono.Commandline;
 using EifelMono.Fluent;
 using Xunit;
 using Xunit.Abstractions;
@@ -38,9 +36,9 @@ namespace EifelMono.CommandlineTests
                     .Option<Type1>("--var1")
                     .OnRootCommand((var1) =>
                     {
-                        commandResult += "InCommandRoot";
                         Assert.Equal(arg1.GetType(), var1.GetType());
                         Assert.Equal(arg1, var1);
+                        commandResult += "InCommandRoot";
                     })
                     .RunAsync();
                 DumpTestTerminal();
@@ -277,9 +275,9 @@ namespace EifelMono.CommandlineTests
                     .Option<Type1>("--var1", arg1)
                     .OnRootCommand((var1) =>
                     {
-                        commandResult += "InCommandRoot";
                         Assert.Equal(arg1.GetType(), var1.GetType());
                         Assert.Equal(arg1, var1);
+                        commandResult += "InCommandRoot";
                     })
                     .RunAsync();
                 DumpTestTerminal();
