@@ -11,18 +11,18 @@ namespace EifelMono.CommandlineTests
     {
         public OptionRootTests(ITestOutputHelper output) : base(output) { }
 
-        [Theory]
-        [InlineData("InCommand")]
-        // [InlineData("InCommand", "", Skip= "This does not work why?")]
-        public async void None_Tests(string expectedResult, params string[] args)
+        [Fact]
+        public async void None_Tests()
         {
             var commandResult = "";
+            var line = $"";
+            var args = line.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
             var value = await args.ArgsCommandBuilder()
                 .UseTerminal(TestTerminal)
-                .OnRootCommand(() => commandResult += "InCommand")
+                .OnRootCommand(() => commandResult += "InCommandRoot")
                 .RunAsync();
             DumpTestTerminal();
-            Assert.Equal(expectedResult, commandResult);
+            Assert.Equal("InCommandRoot", commandResult);
         }
 
         [Fact]
@@ -38,13 +38,13 @@ namespace EifelMono.CommandlineTests
                     .Option<Type1>("--var1")
                     .OnRootCommand((var1) =>
                     {
-                        commandResult += "InCommand";
+                        commandResult += "InCommandRoot";
                         Assert.Equal(arg1.GetType(), var1.GetType());
                         Assert.Equal(arg1, var1);
                     })
                     .RunAsync();
                 DumpTestTerminal();
-                Assert.Equal("InCommand", commandResult);
+                Assert.Equal("InCommandRoot", commandResult);
             }
         }
         [Fact]
@@ -66,11 +66,11 @@ namespace EifelMono.CommandlineTests
                             Assert.Equal(arg1, var1);
                             Assert.Equal(arg2.GetType(), var2.GetType());
                             Assert.Equal(arg2, var2);
-                            commandResult += "InCommand";
+                            commandResult += "InCommandRoot";
                         })
                         .RunAsync();
                     DumpTestTerminal();
-                    Assert.Equal("InCommand", commandResult);
+                    Assert.Equal("InCommandRoot", commandResult);
                 }
         }
         [Fact]
@@ -96,11 +96,11 @@ namespace EifelMono.CommandlineTests
                                 Assert.Equal(arg2, var2);
                                 Assert.Equal(arg3.GetType(), var3.GetType());
                                 Assert.Equal(arg3, var3);
-                                commandResult += "InCommand";
+                                commandResult += "InCommandRoot";
                             })
                             .RunAsync();
                         DumpTestTerminal();
-                        Assert.Equal("InCommand", commandResult);
+                        Assert.Equal("InCommandRoot", commandResult);
                     }
         }
         [Fact]
@@ -130,11 +130,11 @@ namespace EifelMono.CommandlineTests
                                     Assert.Equal(arg3, var3);
                                     Assert.Equal(arg4.GetType(), var4.GetType());
                                     Assert.Equal(arg4, var4);
-                                    commandResult += "InCommand";
+                                    commandResult += "InCommandRoot";
                                 })
                                 .RunAsync();
                             DumpTestTerminal();
-                            Assert.Equal("InCommand", commandResult);
+                            Assert.Equal("InCommandRoot", commandResult);
                         }
         }
         [Fact]
@@ -168,11 +168,11 @@ namespace EifelMono.CommandlineTests
                                         Assert.Equal(arg4, var4);
                                         Assert.Equal(arg5.GetType(), var5.GetType());
                                         Assert.Equal(arg5, var5);
-                                        commandResult += "InCommand";
+                                        commandResult += "InCommandRoot";
                                     })
                                     .RunAsync();
                                 DumpTestTerminal();
-                                Assert.Equal("InCommand", commandResult);
+                                Assert.Equal("InCommandRoot", commandResult);
                             }
         }
         [Fact]
@@ -210,11 +210,11 @@ namespace EifelMono.CommandlineTests
                                             Assert.Equal(arg5, var5);
                                             Assert.Equal(arg6.GetType(), var6.GetType());
                                             Assert.Equal(arg6, var6);
-                                            commandResult += "InCommand";
+                                            commandResult += "InCommandRoot";
                                         })
                                         .RunAsync();
                                     DumpTestTerminal();
-                                    Assert.Equal("InCommand", commandResult);
+                                    Assert.Equal("InCommandRoot", commandResult);
                                 }
         }
         [Fact]
@@ -256,11 +256,11 @@ namespace EifelMono.CommandlineTests
                                                 Assert.Equal(arg6, var6);
                                                 Assert.Equal(arg7.GetType(), var7.GetType());
                                                 Assert.Equal(arg7, var7);
-                                                commandResult += "InCommand";
+                                                commandResult += "InCommandRoot";
                                             })
                                             .RunAsync();
                                         DumpTestTerminal();
-                                        Assert.Equal("InCommand", commandResult);
+                                        Assert.Equal("InCommandRoot", commandResult);
                                     }
         }
 
@@ -277,13 +277,13 @@ namespace EifelMono.CommandlineTests
                     .Option<Type1>("--var1", arg1)
                     .OnRootCommand((var1) =>
                     {
-                        commandResult += "InCommand";
+                        commandResult += "InCommandRoot";
                         Assert.Equal(arg1.GetType(), var1.GetType());
                         Assert.Equal(arg1, var1);
                     })
                     .RunAsync();
                 DumpTestTerminal();
-                Assert.Equal("InCommand", commandResult);
+                Assert.Equal("InCommandRoot", commandResult);
             }
         }
         [Fact]
@@ -305,11 +305,11 @@ namespace EifelMono.CommandlineTests
                             Assert.Equal(arg1, var1);
                             Assert.Equal(arg2.GetType(), var2.GetType());
                             Assert.Equal(arg2, var2);
-                            commandResult += "InCommand";
+                            commandResult += "InCommandRoot";
                         })
                         .RunAsync();
                     DumpTestTerminal();
-                    Assert.Equal("InCommand", commandResult);
+                    Assert.Equal("InCommandRoot", commandResult);
                 }
         }
         [Fact]
@@ -335,11 +335,11 @@ namespace EifelMono.CommandlineTests
                                 Assert.Equal(arg2, var2);
                                 Assert.Equal(arg3.GetType(), var3.GetType());
                                 Assert.Equal(arg3, var3);
-                                commandResult += "InCommand";
+                                commandResult += "InCommandRoot";
                             })
                             .RunAsync();
                         DumpTestTerminal();
-                        Assert.Equal("InCommand", commandResult);
+                        Assert.Equal("InCommandRoot", commandResult);
                     }
         }
         [Fact]
@@ -369,11 +369,11 @@ namespace EifelMono.CommandlineTests
                                     Assert.Equal(arg3, var3);
                                     Assert.Equal(arg4.GetType(), var4.GetType());
                                     Assert.Equal(arg4, var4);
-                                    commandResult += "InCommand";
+                                    commandResult += "InCommandRoot";
                                 })
                                 .RunAsync();
                             DumpTestTerminal();
-                            Assert.Equal("InCommand", commandResult);
+                            Assert.Equal("InCommandRoot", commandResult);
                         }
         }
         [Fact]
@@ -407,11 +407,11 @@ namespace EifelMono.CommandlineTests
                                         Assert.Equal(arg4, var4);
                                         Assert.Equal(arg5.GetType(), var5.GetType());
                                         Assert.Equal(arg5, var5);
-                                        commandResult += "InCommand";
+                                        commandResult += "InCommandRoot";
                                     })
                                     .RunAsync();
                                 DumpTestTerminal();
-                                Assert.Equal("InCommand", commandResult);
+                                Assert.Equal("InCommandRoot", commandResult);
                             }
         }
         [Fact]
@@ -449,11 +449,11 @@ namespace EifelMono.CommandlineTests
                                             Assert.Equal(arg5, var5);
                                             Assert.Equal(arg6.GetType(), var6.GetType());
                                             Assert.Equal(arg6, var6);
-                                            commandResult += "InCommand";
+                                            commandResult += "InCommandRoot";
                                         })
                                         .RunAsync();
                                     DumpTestTerminal();
-                                    Assert.Equal("InCommand", commandResult);
+                                    Assert.Equal("InCommandRoot", commandResult);
                                 }
         }
         [Fact]
@@ -495,11 +495,11 @@ namespace EifelMono.CommandlineTests
                                                 Assert.Equal(arg6, var6);
                                                 Assert.Equal(arg7.GetType(), var7.GetType());
                                                 Assert.Equal(arg7, var7);
-                                                commandResult += "InCommand";
+                                                commandResult += "InCommandRoot";
                                             })
                                             .RunAsync();
                                         DumpTestTerminal();
-                                        Assert.Equal("InCommand", commandResult);
+                                        Assert.Equal("InCommandRoot", commandResult);
                                     }
         }
     }
