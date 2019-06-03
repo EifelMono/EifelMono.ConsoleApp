@@ -21,7 +21,7 @@ namespace EifelMono.CommandlineTests
         {
             bool inCommand = false;
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                 .OnRootCommand(() =>
                 {
                     WriteLine($"RootCommand");
@@ -43,7 +43,7 @@ namespace EifelMono.CommandlineTests
         {
             bool inCommand = false;
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                 .Option<string>("--string-a", default, "c# => stringa")
                 .Option<int>("--int-x", default, "c# => intx")
                 .OnRootCommand((stringa, intx) =>
@@ -64,7 +64,7 @@ namespace EifelMono.CommandlineTests
         {
             var args = new string[] { };
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                 .Command("command1")
                     .Alias("-c1")
                     .Option<int>("--int-a", default, "c# name => inta")
@@ -86,7 +86,7 @@ namespace EifelMono.CommandlineTests
         {
             var args = new string[] { };
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                 .Command("command1")
                     .Command("command1.1")
                         .Option<int>("--int-a", default, "c# name => inta")

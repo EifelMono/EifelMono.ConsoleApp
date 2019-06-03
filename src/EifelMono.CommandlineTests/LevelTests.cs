@@ -15,7 +15,7 @@ namespace EifelMono.CommandlineTests
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
                 .Alias("Test")
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                 .OnRootCommand(() => commandResult += "RootCommand")
                 .RunAsync();
             DumpTestTerminal();
@@ -27,9 +27,9 @@ namespace EifelMono.CommandlineTests
         public async void Play_Root_WithoutRootCommand_Tests(string expectedResult, params string[] args)
         {
             var commandResult = "";
-            var value = await args.ArgsCommandBuilder()
+            _ = await args.ArgsCommandBuilder()
                 .Alias("Test")
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                 .RunAsync();
             DumpTestTerminal();
             Assert.Equal(expectedResult, commandResult);
@@ -42,7 +42,7 @@ namespace EifelMono.CommandlineTests
         {
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                     .OnCommand(() => commandResult += "--Level1-1")
                 .OnRootCommand(() => commandResult += "RootCommand")
@@ -58,7 +58,7 @@ namespace EifelMono.CommandlineTests
         {
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                     .OnCommand(() => commandResult += "--Level1-1")
                 .RunAsync();
@@ -74,7 +74,7 @@ namespace EifelMono.CommandlineTests
         {
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
                         .OnCommand(() => commandResult += "--Level1-2")
@@ -97,7 +97,7 @@ namespace EifelMono.CommandlineTests
         {
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
                             .Command("--Level1-3")
@@ -128,7 +128,7 @@ namespace EifelMono.CommandlineTests
         {
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
                             .Command("--Level1-3")
@@ -158,7 +158,7 @@ namespace EifelMono.CommandlineTests
         {
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
                             .Command("--Level1-3")
@@ -201,7 +201,7 @@ namespace EifelMono.CommandlineTests
         {
             var commandResult = "";
             var value = await args.ArgsCommandBuilder()
-                .SplitLine().WriteLine(GetMethodName()).ArgsLine().SplitLine().UseTerminal(TestTerminal)
+                .HorizontalLine().WriteLine(GetMethodName()).ArgsLine().HorizontalLine().UseTerminal(TestTerminal)
                     .Command("--Level1-1")
                         .Command("--Level1-2")
                             .Command("--Level1-3")

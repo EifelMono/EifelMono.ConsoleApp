@@ -105,7 +105,7 @@ namespace EifelMono.Commandline
             thisValue.Lines.Add(line);
             return thisValue;
         }
-        public static T SplitLine<T>(this T thisValue, char @char = '-', int count = 79) where T : ArgsCommandBuilderRootCommand
+        public static T HorizontalLine<T>(this T thisValue, char @char = '-', int count = 79) where T : ArgsCommandBuilderRootCommand
         {
             thisValue.Lines.Add(new string(@char, count));
             return thisValue;

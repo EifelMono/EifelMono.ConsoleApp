@@ -15,16 +15,23 @@ namespace EifelMono.CommandlineTests
     {
         protected readonly ITestOutputHelper Output;
 
-        public IConsole TestTerminal = new TestTerminal();
+        public TestTerminal TestTerminal { get; set; } = new TestTerminal();
 
         public XunitCore(ITestOutputHelper output)
         {
             Output = output;
         }
 
-        public void DumpTestTerminal()
+        public void DumpTestTerminal(bool clear= true)
         {
             WriteLine(TestTerminal.Out);
+            if (clear)
+                ClearTestTerminal();
+        }
+
+        public void ClearTestTerminal()
+        {
+            TestTerminal.Clear();
         }
 
         public void WriteLine(string text = "") => Output.WriteLine(text);
