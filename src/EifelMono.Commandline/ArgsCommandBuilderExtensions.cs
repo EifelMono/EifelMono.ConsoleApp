@@ -18,13 +18,29 @@ namespace EifelMono.Commandline
             return result;
         }
 
+        // ??????
+        private static bool IsSuggestRequest(string[] args)
+        {
+            foreach(var arg in args)
+            {
+                if (arg.StartsWith("[suggest"))
+                    return true;
+                if (arg.StartsWith("[debug"))
+                    return true;
+            }
+            return false;
+        }
+
         public static Task<int> RunAsync(this IArgsComamandBuilderArgs thisValue)
         {
-            foreach (var line in thisValue.Lines)
-                if (thisValue.Console is object)
-                    thisValue.Console.Out.WriteLine(line);
-                else
-                    Console.WriteLine(line);
+            if (!IsSuggestRequest(thisValue.Args))
+            {
+                foreach (var line in thisValue.Lines)
+                    if (thisValue.Console is object)
+                        thisValue.Console.Out.WriteLine(line);
+                    else
+                        Console.WriteLine(line);
+            }
             return (thisValue.Command as RootCommand).InvokeAsync(thisValue.Args, thisValue.Console);
         }
 

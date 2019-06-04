@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.CommandLine.Experimental" Version="0.2.0-alpha.19281.2" />
+    <PackageReference Include="System.CommandLine.Experimental" Version="0.2.0-alpha.19304.1" />
     <PackageReference Include="System.Interactive.Async" Version="4.0.0-preview.1.build.745" />
-    <PackageReference Include="System.CommandLine.Rendering" Version="0.2.0-alpha.19281.2" />
-    <PackageReference Include="EifelMono.Fluent" Version="0.0.16" />
+    <PackageReference Include="System.CommandLine.Rendering" Version="0.2.0-alpha.19304.1" />
+    <PackageReference Include="EifelMono.Fluent" Version="0.0.17" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
