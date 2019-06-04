@@ -64,7 +64,8 @@ static Task<int> MainFromWikiWithAdditionalStuff(string[] args)
 ```
 
  
-The options depth is also 7 
+The options depth is 6 and "type safe"
+the first option is the first one in OnCommand  
 ```csharp
 
 var value = await args.ArgsCommandBuilder()
