@@ -3,7 +3,7 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Threading.Tasks;
 
-namespace EifelMono.Commandline
+namespace EifelMono.CommandLine
 {
     public static class ArgsCommandBuilderExtensions
     {

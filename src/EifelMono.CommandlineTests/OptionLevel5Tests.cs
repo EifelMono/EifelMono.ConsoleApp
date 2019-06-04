@@ -1,9 +1,9 @@
-﻿using EifelMono.Commandline;
+﻿using EifelMono.CommandLine;
 using EifelMono.Fluent;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EifelMono.CommandlineTests
+namespace EifelMono.CommandLineTests
 {
     public class OptionLevel5Tests : XunitCore
     {

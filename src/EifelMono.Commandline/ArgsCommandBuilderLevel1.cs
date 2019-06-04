@@ -2,7 +2,7 @@
 using System.CommandLine;
 using System.CommandLine.Invocation;
 
-namespace EifelMono.Commandline
+namespace EifelMono.CommandLine
 {
     public class ArgsCommandBuilderLevel1 : ArgsCommandBuilder { }
 

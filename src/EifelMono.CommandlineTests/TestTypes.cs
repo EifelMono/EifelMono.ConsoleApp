@@ -1,4 +1,4 @@
-﻿namespace EifelMono.CommandlineTests
+﻿namespace EifelMono.CommandLineTests
 {
     public enum Type1
     {

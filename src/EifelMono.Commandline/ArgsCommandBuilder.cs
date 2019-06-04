@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.CommandLine;
 
-namespace EifelMono.Commandline
+namespace EifelMono.CommandLine
 {
     public class ArgsCommandBuilder
     {

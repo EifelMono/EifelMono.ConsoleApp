@@ -9,7 +9,7 @@ using System.CommandLine.Rendering;
 using System.CommandLine;
 using System.Diagnostics;
 
-namespace EifelMono.CommandlineTests
+namespace EifelMono.CommandLineTests
 {
     public class XunitCore
     {

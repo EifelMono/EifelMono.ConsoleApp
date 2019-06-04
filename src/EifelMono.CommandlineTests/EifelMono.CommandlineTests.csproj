@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EifelMono.Commandline\EifelMono.Commandline.csproj" />
+    <ProjectReference Include="..\EifelMono.CommandLine\EifelMono.CommandLine.csproj" />
   </ItemGroup>
 
 </Project>

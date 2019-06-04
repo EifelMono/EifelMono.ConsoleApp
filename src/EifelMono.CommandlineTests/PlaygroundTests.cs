@@ -1,9 +1,9 @@
 using System;
-using EifelMono.Commandline;
+using EifelMono.CommandLine;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EifelMono.CommandlineTests
+namespace EifelMono.CommandLineTests
 {
     public class PlayGroundTests : XunitCore
     {

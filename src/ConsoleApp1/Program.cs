@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using EifelMono.Commandline;
+using EifelMono.CommandLine;
 using EifelMono.Fluent;
 using EifelMono.Fluent.Extensions;
 using EifelMono.Fluent.IO;

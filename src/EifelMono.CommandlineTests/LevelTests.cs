@@ -1,8 +1,8 @@
-﻿using EifelMono.Commandline;
+﻿using EifelMono.CommandLine;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EifelMono.CommandlineTests
+namespace EifelMono.CommandLineTests
 {
     public class LevelTests : XunitCore
     {
